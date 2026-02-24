@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>โปรแกรมคำนวณวัสดุงานฝ้า</title>
+<style>
+body { font-family: Arial; max-width: 500px; margin: 40px auto; }
+select, input, button { padding: 10px; margin: 8px 0; width: 100%; }
+.result { background: #f3f3f3; padding: 15px; margin-top: 15px; }
+</style>
+</head>
+<body>
+
+<h2>โปรแกรมคำนวณวัสดุงานฝ้า</h2>
+
+<input type="number" id="area" placeholder="พื้นที่ (ตรม)">
+
+<select id="type">
+<option value="1">ฝ้าฉาบเรียบ</option>
+<option value="2">ฝ้า T-Bar 60x60</option>
+<option value="3">ฝ้า T-Bar 120x60</option>
+<option value="4">ฝ้าดรอป / ซ่อนไฟ</option>
+</select>
+
+<button onclick="calculate()">คำนวณ</button>
+
+<div class="result" id="output"></div>
+
+<script>
+function calculate() {
+
+    const area = parseFloat(document.getElementById("area").value);
+    const choice = document.getElementById("type").value;
+
+    if (!area || area <= 0) {
+        document.getElementById("output").innerHTML = "กรอกพื้นที่ให้ถูกต้อง";
+        return;
+    }
+
+    let result = "";
+
+    if (choice === "1") {
+        const gypsum = Math.ceil(area / 2.88);
+        const frame = area * 3.5;
+        const hanger = Math.ceil(area / 1.2);
+        const screw = Math.floor(area * 40);
+        const plaster = area * 0.1;
+
+        result += `<b>ฝ้าฉาบเรียบ</b><br>
+        แผ่นยิปซั่ม: ${gypsum} แผ่น<br>
+        โครงซีลาย: ${frame.toFixed(2)} เมตร<br>
+        ดรอปเปอร์: ${hanger} ตัว<br>
+        สกรู: ${screw} ตัว<br>
+        ปูนฉาบ: ${plaster.toFixed(2)} กก.<br>`;
+    }
+
+    if (choice === "2") {
+        const panel = Math.ceil(area / 0.36);
+        const main = area * 0.28;
+        const cross1200 = area * 1.39;
+        const cross600 = area * 0.83;
+        const wire = Math.floor(area * 0.7);
+        const wall = area * 0.5;
+
+        result += `<b>ฝ้า T-Bar 60x60</b><br>
+        แผ่น: ${panel} แผ่น<br>
+        เมน3600: ${main.toFixed(2)} เส้น<br>
+        ซอย1200: ${cross1200.toFixed(2)} เส้น<br>
+        ซอย600: ${cross600.toFixed(2)} เส้น<br>
+        ลวดหิ้ว: ${wire} ตัว<br>
+        ฉากริม: ${wall.toFixed(2)} เมตร<br>`;
+    }
+
+    if (choice === "3") {
+        const panel = Math.ceil(area / 0.72);
+        const main = area * 0.28;
+        const cross1200 = area * 0.70;
+        const cross600 = area * 0.20;
+        const wire = Math.floor(area * 0.7);
+        const wall = area * 0.5;
+
+        result += `<b>ฝ้า T-Bar 120x60</b><br>
+        แผ่น: ${panel} แผ่น<br>
+        เมน3600: ${main.toFixed(2)} เส้น<br>
+        ซอย1200: ${cross1200.toFixed(2)} เส้น<br>
+        ซอย600: ${cross600.toFixed(2)} เส้น<br>
+        ลวดหิ้ว: ${wire} ตัว<br>
+        ฉากริม: ${wall.toFixed(2)} เมตร<br>`;
+    }
+
+    if (choice === "4") {
+        const gypsum = Math.ceil(area / 2.88);
+        const frame = area * 4.5;
+        const hanger = Math.floor(area);
+        const screw = Math.floor(area * 45);
+        const plaster = area * 0.12;
+        const tape = Math.floor(area);
+
+        result += `<b>ฝ้าดรอป / ซ่อนไฟ</b><br>
+        แผ่นยิปซั่ม: ${gypsum} แผ่น<br>
+        โครงรวม: ${frame.toFixed(2)} เมตร<br>
+        ดรอปเปอร์: ${hanger} ตัว<br>
+        สกรู: ${screw} ตัว<br>
+        ปูนฉาบ: ${plaster.toFixed(2)} กก.<br>
+        ผ้าฉาบ: ${tape} เมตร<br>`;
+    }
+
+    document.getElementById("output").innerHTML = result;
+}
+</script>
+
+</body>
+</html>
